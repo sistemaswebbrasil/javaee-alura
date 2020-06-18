@@ -22,7 +22,7 @@
 				<h:outputLabel value="Data de Lançamento:  " for="dataLancamento" />
 				<h:inputText id="dataLancamento" value="#{livroBean.livro.dataLancamento}" />
 
-				<h:commandButton value="Gravar" action="#{livroBean.gravar}"></h:commandButton>
+				<h:commandButton value="Gravar" actionListener="#{livroBean.gravar}"></h:commandButton>
 			</h:panelGrid>
 
 		</fieldset>
