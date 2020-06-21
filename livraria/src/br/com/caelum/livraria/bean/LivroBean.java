@@ -1,5 +1,6 @@
 package br.com.caelum.livraria.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -15,8 +16,10 @@ import br.com.caelum.livraria.modelo.Livro;
 
 @ViewScoped
 @ManagedBean
-public class LivroBean {
+public class LivroBean implements Serializable {
 
+	private static final long serialVersionUID = 5483726752452527993L;
+	
 	private Livro livro = new Livro();
 	private Integer autorId;
 
@@ -25,15 +28,17 @@ public class LivroBean {
 	}
 
 	public void gravar() {
-		System.out.println("Gravando livro " + this.livro.getTitulo());
-
 		if (livro.getAutores().isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage("autor",
 					new FacesMessage("Livro deve ter pelo menos um Autor"));
 			return;
 		}
 
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if( this.livro.getId() == null ) {			
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
+		}else {
+			new DAO<Livro>(Livro.class).atualiza(this.livro);
+		}
 		this.livro = new Livro();
 	}
 
@@ -47,6 +52,21 @@ public class LivroBean {
 	public void gravarAutor() {
 		Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
 		this.livro.adicionaAutor(autor);
+	}
+	
+	public void removeLivro(Livro livro) {
+
+		System.out.println(livro);
+		new DAO<Livro>(Livro.class).remove(livro);
+	}
+	
+	public void removeAutorDoLivro(Autor autor) {
+		this.livro.removeAutor(autor);		
+	}
+	
+	public void carregaLivro(Livro livroForm) {
+		Livro livroDb = new DAO<Livro>(Livro.class).buscaPorId(livroForm.getId());		
+		this.livro = livroDb;
 	}
 
 	public List<Autor> getAutoresDoLivro() {

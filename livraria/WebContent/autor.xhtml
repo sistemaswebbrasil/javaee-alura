@@ -14,19 +14,56 @@
 			<fieldset>
 				<legend>Dados do Autor</legend>
 				<h:panelGrid columns="3">
+
 					<h:outputLabel value="Nome:" for="nome" />
-					<h:inputText id="nome" value="#{autorBean.autor.nome}" required="true">
+					<h:inputText id="nome" value="#{autorBean.autor.nome}"
+						required="true">
 						<f:validateLength minimum="5" />
 						<f:ajax event="blur" render="messageNome" />
 					</h:inputText>
-					<h:message for="nome" id="messageNome"/>
-					<h:commandButton value="Gravar" action="#{autorBean.gravar}"/>
+					<h:message for="nome" id="messageNome" />
+
+					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
 				</h:panelGrid>
 			</fieldset>
 		</h:form>
+
+		<h:dataTable value="#{autorBean.autores}" var="autor" id="listar">
+
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{autor.id}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{autor.nome}" />
+			</h:column>
+
+			<h:column>
+				<h:form>
+					<f:facet name="header">Remover</f:facet>
+					<h:commandLink value="Remove" action="#{autorBean.remover(autor)}"
+						immediate="true" />
+				</h:form>
+			</h:column>
+
+			<h:column>
+				<h:form>
+					<h:commandLink value="Alterar">
+						<f:setPropertyActionListener target="#{autorBean.autor}"
+							value="#{autor}" />
+					</h:commandLink>
+				</h:form>
+			</h:column>
+
+		</h:dataTable>
+
+
+
 	</ui:define>
 	<ui:define name="rodape">	
 		Autor
-	</ui:define>	
+	</ui:define>
 </ui:composition>
 </html>

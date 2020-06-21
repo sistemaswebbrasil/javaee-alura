@@ -63,7 +63,9 @@ public class DAO<T> {
 	}
 
 	public T buscaPorId(Integer id) {
+		
 		EntityManager em = new JPAUtil().getEntityManager();
+		em.getTransaction().begin();
 		T instancia = em.find(classe, id);
 		em.close();
 		return instancia;

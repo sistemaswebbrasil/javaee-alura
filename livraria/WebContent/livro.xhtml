@@ -70,11 +70,14 @@
 					<h:column>
 						<h:outputText value="#{autor.nome}"></h:outputText>
 					</h:column>
+					
+				    <h:column>
+				        <h:commandLink value="X" action="#{livroBean.removeAutorDoLivro(autor)}" />
+				    </h:column>					
 				</h:dataTable>
 
 				<h:commandLink value="Cadastrar novo autor"
 					action="autor?faces-redirect=true" immediate="true" />
-
 			</fieldset>
 
 			<h:commandButton value="Gravar" actionListener="#{livroBean.gravar}">
@@ -84,6 +87,11 @@
 
 		<h:dataTable id="tabelaLivros" value="#{livroBean.livros}" var="livro"
 			class="table">
+			
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{livro.id}" />
+			</h:column>			
 
 			<h:column>
 				<f:facet name="header">Título</f:facet>
@@ -106,6 +114,22 @@
 					<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 				</h:outputText>
 			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Alterar</f:facet>
+				<h:form>
+					<h:commandLink value="Altera" action="#{livroBean.carregaLivro(livro)}"/>
+				</h:form>
+			</h:column>			
+			
+			<h:column>				
+				<f:facet name="header">Excluir</f:facet>
+				<h:form>
+					<h:commandLink value="X" action="#{livroBean.removeLivro(livro)}" />
+				</h:form>
+			</h:column>
+			
+
 
 		</h:dataTable>
 	</ui:define>
