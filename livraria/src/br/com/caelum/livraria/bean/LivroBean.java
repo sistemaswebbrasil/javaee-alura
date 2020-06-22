@@ -19,9 +19,10 @@ import br.com.caelum.livraria.modelo.Livro;
 public class LivroBean implements Serializable {
 
 	private static final long serialVersionUID = 5483726752452527993L;
-	
+
 	private Livro livro = new Livro();
 	private Integer autorId;
+	private Integer livroId;
 
 	public List<Autor> getAutores() {
 		return new DAO<Autor>(Autor.class).listaTodos();
@@ -34,39 +35,43 @@ public class LivroBean implements Serializable {
 			return;
 		}
 
-		if( this.livro.getId() == null ) {			
+		if (this.livro.getId() == null) {
 			new DAO<Livro>(Livro.class).adiciona(this.livro);
-		}else {
+		} else {
 			new DAO<Livro>(Livro.class).atualiza(this.livro);
 		}
 		this.livro = new Livro();
 	}
 
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
-	    String valor = value.toString();
-	    if (!valor.startsWith("1")) {
-	        throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
-	    }
+		String valor = value.toString();
+		if (!valor.startsWith("1")) {
+			throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
+		}
 	}
 
 	public void gravarAutor() {
 		Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
 		this.livro.adicionaAutor(autor);
 	}
-	
+
 	public void removeLivro(Livro livro) {
 
 		System.out.println(livro);
 		new DAO<Livro>(Livro.class).remove(livro);
 	}
-	
+
 	public void removeAutorDoLivro(Autor autor) {
-		this.livro.removeAutor(autor);		
+		this.livro.removeAutor(autor);
 	}
-	
+
 	public void carregaLivro(Livro livroForm) {
-		Livro livroDb = new DAO<Livro>(Livro.class).buscaPorId(livroForm.getId());		
+		Livro livroDb = new DAO<Livro>(Livro.class).buscaPorId(livroForm.getId());
 		this.livro = livroDb;
+	}
+
+	public void carregaPelaId() {
+		this.livro = new DAO<Livro>(Livro.class).buscaPorId(this.livroId);
 	}
 
 	public List<Autor> getAutoresDoLivro() {
@@ -87,6 +92,18 @@ public class LivroBean implements Serializable {
 
 	public void setAutorId(Integer autorId) {
 		this.autorId = autorId;
+	}
+
+	public Integer getLivroId() {
+		return livroId;
+	}
+
+	public void setLivroId(Integer livroId) {
+		this.livroId = livroId;
+	}
+
+	public void setLivro(Livro livro) {
+		this.livro = livro;
 	}
 
 }

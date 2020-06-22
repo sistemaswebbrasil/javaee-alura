@@ -16,6 +16,8 @@ public class AutorBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Autor autor = new Autor();
+	
+	private Integer autorId;
 
 	public String gravar() {
 		if (this.autor.getId() == null) {
@@ -24,6 +26,10 @@ public class AutorBean implements Serializable {
 			new DAO<Autor>(Autor.class).atualiza(this.autor);
 		}
 		return "livro?faces-redirect=true";
+	}
+	
+	public void carregaAutorPelaID() {
+		this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
 	}
 
 	public List<Autor> getAutores() {
@@ -40,6 +46,14 @@ public class AutorBean implements Serializable {
 
 	public void setAutor(Autor autor) {
 		this.autor = autor;
+	}
+
+	public Integer getAutorId() {
+		return autorId;
+	}
+
+	public void setAutorId(Integer autorId) {
+		this.autorId = autorId;
 	}
 
 }
