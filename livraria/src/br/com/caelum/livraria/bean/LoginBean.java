@@ -2,6 +2,7 @@ package br.com.caelum.livraria.bean;
 
 
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -27,8 +28,17 @@ public class LoginBean {
             return "livro?faces-redirect=true";
         }
 
-        return null;
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage("Usuário não encontrado"));
+
+        return "login?faces-redirect=true";
     }   
+    
+    public String deslogar() {
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	context.getExternalContext().getSessionMap().remove("usuarioLogado");
+    	return "login?faces-redirect=true";
+    }
 
     public Usuario getUsuario() {
         return usuario;
