@@ -28,6 +28,8 @@ public class Livro implements Serializable{
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataLancamento = Calendar.getInstance();
+	
+	private String genero;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Autor> autores = new ArrayList<Autor>();
@@ -89,6 +91,14 @@ public class Livro implements Serializable{
 
 	public void removeAutor(Autor autor) {
 		this.autores.remove(autor);		
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 	
 }
