@@ -21,5 +21,10 @@
 	        true
 	    </param-value>
 	</context-param>
+	
+	<context-param>
+    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+    <param-value>true</param-value>
+</context-param>
 	  
 </web-app>

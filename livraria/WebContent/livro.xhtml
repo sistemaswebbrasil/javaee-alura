@@ -143,7 +143,7 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column filterBy="#{livro.dataLancamento.time}"  sortBy="#{livro.dataLancamento}" headerText="Data" footerText="Menor ou igual" filterMatchMode="lte">
+				<p:column filterBy="#{livro.dataLancamento.time}"  sortBy="#{livro.dataLancamento.time}" headerText="Data" footerText="Menor ou igual" filterMatchMode="lte">
 					  
 					<f:facet name="filter" >
 					    <p:calendar  pattern="dd/MM/yyyy">
