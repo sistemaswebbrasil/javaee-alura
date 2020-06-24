@@ -10,8 +10,10 @@
     <ui:composition template="_template.xhtml">
 
         <ui:define name="titulo">
-                <p:outputPanel>Vendas</p:outputPanel>
+                Vendas
         </ui:define>
+        
+        <p:outputPanel>Vendas</p:outputPanel>
 
         <ui:define name="conteudo">
             <p:chart type="bar" model="#{vendasBean.vendasModel}" style="height:300px" />        
