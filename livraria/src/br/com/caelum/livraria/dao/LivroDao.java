@@ -1,7 +1,6 @@
 package br.com.caelum.livraria.dao;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +12,12 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.tx.Log;
 
 public class LivroDao implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+		
 	@Inject
 	private EntityManager em;
 	
@@ -44,10 +44,12 @@ public class LivroDao implements Serializable{
 		return dao.buscaPorId(id);
 	}
 
+	@Log
 	public List<Livro> listaTodos() {
 		return dao.listaTodos();
 	}
 
+	@Log
 	public List<Livro> primeFacesFilter(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		return dao.primeFacesFilter(first, pageSize, sortBy, filterBy);
