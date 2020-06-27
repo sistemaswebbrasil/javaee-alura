@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.IdentifiableType;
@@ -30,15 +29,14 @@ public class DAO<T> implements Serializable {
 	private static final long serialVersionUID = -7869792440648486943L;
 
 	private final Class<T> classe;
+	private EntityManager em;
 
-	public DAO(Class<T> classe) {
+	public DAO(EntityManager manager, Class<T> classe) { 
+		this.em = manager;
 		this.classe = classe;
 	}
 
 	public void adiciona(T t) {
-
-		// consegue a entity manager
-		EntityManager em = new JPAUtil().getEntityManager();
 
 		// abre transacao
 		em.getTransaction().begin();
@@ -48,61 +46,57 @@ public class DAO<T> implements Serializable {
 
 		// commita a transacao
 		em.getTransaction().commit();
-
-		// fecha a entity manager
-		em.close();
 	}
 
 	public void remove(T t) {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		em.getTransaction().begin();
 
 		em.remove(em.merge(t));
 
 		em.getTransaction().commit();
-		em.close();
+		
 	}
 
 	public void atualiza(T t) {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		em.getTransaction().begin();
 
 		em.merge(t);
 
 		em.getTransaction().commit();
-		em.close();
+		
 	}
 
 	public List<T> listaTodos() {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 		query.select(query.from(classe));
 
 		List<T> lista = em.createQuery(query).getResultList();
 
-		em.close();
+		
 		return lista;
 	}
 
 	public T buscaPorId(Integer id) {
 
-		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		T instancia = em.find(classe, id);
-		em.close();
+		
 		return instancia;
 	}
 
 	public int contaTodos() {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		long result = (Long) em.createQuery("select count(n) from livro n").getSingleResult();
-		em.close();
+		
 
 		return (int) result;
 	}
 
 	public List<T> listaTodosPaginada(int firstResult, int maxResults, String coluna, String valor) {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 		Root<T> root = query.from(classe);
 
@@ -111,29 +105,34 @@ public class DAO<T> implements Serializable {
 
 		List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 
-		em.close();
+		
 		return lista;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public List<T> primeFacesFilter(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
-		EntityManager em = new JPAUtil().getEntityManager();
+		try {		
+		
 		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 		Root<T> root = query.from(classe);
 		ArrayList<Predicate> predicates = new ArrayList<Predicate>();
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 
-		addFilters(filterBy, query, root, predicates, builder,em);
+		addFilters(filterBy, query, root, predicates, builder, em);
 		addOrdinations(sortBy, query, root, builder);
 
 		List<T> lista = em.createQuery(query).setFirstResult(first).setMaxResults(pageSize).getResultList();
-
-		em.close();
+		
 		return lista;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw new RuntimeException("Não sei porque está dando erro");
+		}		
+		
 	}
-
-
 
 	private void addOrdinations(Map<String, SortMeta> sortBy, CriteriaQuery<T> query, Root<T> root,
 			CriteriaBuilder builder) {
@@ -160,10 +159,10 @@ public class DAO<T> implements Serializable {
 			query.orderBy(orders);
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
+	@SuppressWarnings({ "unused", "unchecked", "rawtypes" })
 	private void addFilters(Map<String, FilterMeta> filterBy, CriteriaQuery<?> query, Root<?> root,
-			ArrayList<Predicate> predicates, CriteriaBuilder builder,EntityManager em) {
+			ArrayList<Predicate> predicates, CriteriaBuilder builder, EntityManager em) {
 		if (filterBy != null) {
 			for (FilterMeta meta : filterBy.values()) {
 
@@ -211,13 +210,14 @@ public class DAO<T> implements Serializable {
 						predicates.add(
 								builder.lessThanOrEqualTo(root.<String>get(filterField), (Comparable) filterValue));
 						break;
-					case STARTS_WITH:								
-						Class tipo = getTypeFromEntity(em,classe,filterField);
-						
+					case STARTS_WITH:
+						Class tipo = getTypeFromEntity(em, classe, filterField);
+
 						if (tipo != null && tipo.getName() == "double") {
-							predicates.add(builder.lessThanOrEqualTo(root.<Date>get(filterField), (Comparable) filterValue));
+							predicates.add(
+									builder.lessThanOrEqualTo(root.<Date>get(filterField), (Comparable) filterValue));
 							break;
-						}						
+						}
 						predicates.add(builder.like(root.<String>get(filterField), filterValue + "%"));
 						break;
 					default:
@@ -232,23 +232,23 @@ public class DAO<T> implements Serializable {
 	}
 
 	public int quantidadeDeElementos() {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		long result = (Long) em.createQuery("select count(n) from " + classe.getSimpleName() + " n").getSingleResult();
-		em.close();
+		
 
 		return (int) result;
 	}
 
 	public int primeFacesFilterCount(Map<String, FilterMeta> filterBy) {
-		EntityManager em = new JPAUtil().getEntityManager();
+
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Long> query = builder.createQuery(Long.class);
 		Root<T> root = query.from(classe);
 		ArrayList<Predicate> predicates = new ArrayList<Predicate>();
-		addFilters(filterBy, query, root, predicates, builder,em);		
+		addFilters(filterBy, query, root, predicates, builder, em);
 		query.multiselect(builder.count(root));
 		Long result = em.createQuery(query).getSingleResult();
-		em.close();
+		
 		return result.intValue();
 
 	}
@@ -259,13 +259,13 @@ public class DAO<T> implements Serializable {
 		IdentifiableType<T> of = (IdentifiableType<T>) m.managedType(clazz);
 		return of.getId(of.getIdType().getJavaType());
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	private Class getTypeFromEntity(EntityManager em, Class<T> clazz, String field) {
 		Metamodel m = em.getMetamodel();
 		IdentifiableType<T> of = (IdentifiableType<T>) m.managedType(clazz);
-		Class type = of.getAttribute(field).getJavaType();		
+		Class type = of.getAttribute(field).getJavaType();
 		return type;
-	}	
+	}
 
 }
