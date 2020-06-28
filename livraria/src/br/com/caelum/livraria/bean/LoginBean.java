@@ -23,13 +23,15 @@ public class LoginBean implements Serializable {
 	@Inject
 	private UsuarioDao usuarioDao;
 	
+    @Inject
+    private FacesContext context;	
+	
 	private Usuario usuario = new Usuario();
     
     public String efetuaLogin() {
         System.out.println("Fazendo login do usuário "
                 + this.usuario.getEmail());
 
-        FacesContext context = FacesContext.getCurrentInstance();
         boolean existe = usuarioDao.existe(this.usuario);
 
         if (existe) {
@@ -43,8 +45,7 @@ public class LoginBean implements Serializable {
         return "login?faces-redirect=true";
     }   
     
-    public String deslogar() {
-    	FacesContext context = FacesContext.getCurrentInstance();
+    public String deslogar() {    	
     	context.getExternalContext().getSessionMap().remove("usuarioLogado");
     	return "login?faces-redirect=true";
     }

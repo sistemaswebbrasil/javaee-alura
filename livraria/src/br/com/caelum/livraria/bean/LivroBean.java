@@ -19,6 +19,7 @@ import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
 import br.com.caelum.livraria.modelo.LivroDataModel;
 import br.com.caelum.livraria.tx.Transacional;
+import br.com.caelum.livraria.util.JsfUtil;
 
 @Named
 @ViewScoped
@@ -41,6 +42,9 @@ public class LivroBean implements Serializable {
 
 	@Inject
 	private LivroDao livroDao;
+	
+	@Inject
+	private JsfUtil context;
 
 	
 	public List<Autor> getAutores() {
@@ -52,8 +56,7 @@ public class LivroBean implements Serializable {
 	    System.out.println("Gravando livro " + this.livro.getTitulo());
 
 	    if (livro.getAutores().isEmpty()) {
-	        FacesContext.getCurrentInstance().addMessage("autor",
-	                new FacesMessage("Livro deve ter pelo menos um Autor."));
+	    	context.getFacesContext().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
 	        return;
 	    }
 
