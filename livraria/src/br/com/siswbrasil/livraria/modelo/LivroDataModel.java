@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.modelo;
+package br.com.siswbrasil.livraria.modelo;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
-import br.com.caelum.livraria.dao.LivroDao;
+import br.com.siswbrasil.livraria.dao.LivroDao;
 
 @ViewScoped
 public class LivroDataModel extends LazyDataModel<Livro> {

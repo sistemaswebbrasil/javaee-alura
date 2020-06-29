@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.dao;
+package br.com.siswbrasil.livraria.dao;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,8 +11,8 @@ import javax.persistence.EntityManager;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
-import br.com.caelum.livraria.modelo.Livro;
-import br.com.caelum.livraria.tx.Log;
+import br.com.siswbrasil.livraria.modelo.Livro;
+import br.com.siswbrasil.livraria.tx.Log;
 
 public class LivroDao implements Serializable{
 

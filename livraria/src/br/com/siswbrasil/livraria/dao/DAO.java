@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.dao;
+package br.com.siswbrasil.livraria.dao;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ import org.primefaces.model.MatchMode;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
-import br.com.caelum.livraria.util.LocalDateTimeToDate;
+import br.com.siswbrasil.livraria.util.LocalDateTimeToDate;
 
 public class DAO<T> implements Serializable {
 

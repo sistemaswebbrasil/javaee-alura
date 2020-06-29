@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.tx;
+package br.com.siswbrasil.livraria.tx;
 
 import java.io.Serializable;
 

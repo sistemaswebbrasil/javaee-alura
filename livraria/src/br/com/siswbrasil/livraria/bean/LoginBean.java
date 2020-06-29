@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.bean;
+package br.com.siswbrasil.livraria.bean;
 
 
 
@@ -11,8 +11,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.caelum.livraria.dao.UsuarioDao;
-import br.com.caelum.livraria.modelo.Usuario;
+import br.com.siswbrasil.livraria.dao.UsuarioDao;
+import br.com.siswbrasil.livraria.modelo.Usuario;
 
 @Named
 @ViewScoped

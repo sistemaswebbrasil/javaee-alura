@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.modelo;
+package br.com.siswbrasil.livraria.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.bean;
+package br.com.siswbrasil.livraria.bean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,9 +7,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.caelum.livraria.dao.AutorDao;
-import br.com.caelum.livraria.modelo.Autor;
-import br.com.caelum.livraria.tx.Transacional;
+import br.com.siswbrasil.livraria.dao.AutorDao;
+import br.com.siswbrasil.livraria.modelo.Autor;
+import br.com.siswbrasil.livraria.tx.Transacional;
 
 @Named
 @ViewScoped

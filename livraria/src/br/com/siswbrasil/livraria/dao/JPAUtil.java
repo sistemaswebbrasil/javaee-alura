@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.dao;
+package br.com.siswbrasil.livraria.dao;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;

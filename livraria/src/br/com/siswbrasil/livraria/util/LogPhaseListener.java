@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.util;
+package br.com.siswbrasil.livraria.util;
 
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;

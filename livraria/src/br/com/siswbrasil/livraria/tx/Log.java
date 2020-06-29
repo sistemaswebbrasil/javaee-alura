@@ -1,4 +1,4 @@
-package br.com.caelum.livraria.tx;
+package br.com.siswbrasil.livraria.tx;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
