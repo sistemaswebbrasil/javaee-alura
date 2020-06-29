@@ -1,0 +1,6 @@
+<beans>
+    <interceptors>
+        <class>br.com.siswbrasil.livraria.tx.GerenciadorDeTransacao</class>
+        <class>br.com.siswbrasil.livraria.tx.TempoDeExecucaoInterceptor</class>
+    </interceptors>
+</beans>
