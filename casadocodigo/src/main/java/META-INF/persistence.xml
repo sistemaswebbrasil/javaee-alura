@@ -5,6 +5,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>        
 		<jta-data-source>java:/jdbc/mariadbJee01</jta-data-source>		
         <class>br.com.siswbrasil.entity.Livro</class>
+        <class>br.com.siswbrasil.entity.Autor</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

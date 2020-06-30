@@ -2,12 +2,15 @@ package br.com.siswbrasil.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Livro implements Serializable {
@@ -22,6 +25,9 @@ public class Livro implements Serializable {
     private String descricao;
     private BigDecimal preco;
     private Integer numeroPaginas;
+    
+    @ManyToMany
+    private List<Autor> autores = new ArrayList<>();    
     
 	public Integer getId() {
 		return id;
@@ -52,6 +58,12 @@ public class Livro implements Serializable {
 	}
 	public void setNumeroPaginas(Integer numeroPaginas) {
 		this.numeroPaginas = numeroPaginas;
+	}
+	public List<Autor> getAutores() {
+		return autores;
+	}
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
 	}    
     
 }

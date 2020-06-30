@@ -1,13 +1,17 @@
 package br.com.siswbrasil.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import br.com.siswbrasil.dao.AutorDao;
 import br.com.siswbrasil.dao.LivroDao;
+import br.com.siswbrasil.entity.Autor;
 import br.com.siswbrasil.entity.Livro;
 
 @Named
@@ -19,12 +23,32 @@ public class AdminLivrosBean implements Serializable {
 	@Inject
 	private LivroDao livroDao;
 
+	@Inject
+	private AutorDao autorDao;
+
 	private Livro livro = new Livro();
 
+	private List<Integer> autoresId = new ArrayList<>();
+
 	@Transactional
-	public void salva() {
-		System.out.println("Livro cadastrado: " + livro);
+	public String salva() {
+		for (Integer autorId : autoresId) {
+			livro.getAutores().add(new Autor(autorId));
+		}
 		livroDao.salvar(livro);
+		return "/livro/lista?faces-redirect=true";
+	}
+
+	public List<Autor> getAutores() {
+		return autorDao.getLista();
+	}
+
+	public List<Integer> getAutoresId() {
+		return autoresId;
+	}
+
+	public void setAutoresId(List<Integer> autoresId) {
+		this.autoresId = autoresId;
 	}
 
 	public Livro getLivro() {
@@ -34,4 +58,5 @@ public class AdminLivrosBean implements Serializable {
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
+
 }
