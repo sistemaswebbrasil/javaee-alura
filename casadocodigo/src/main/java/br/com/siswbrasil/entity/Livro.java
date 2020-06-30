@@ -102,5 +102,7 @@ public class Livro implements Serializable {
 	public void setCapaPath(String capaPath) {
 		this.capaPath = capaPath;
 	}    
+	
+	
     
 }
