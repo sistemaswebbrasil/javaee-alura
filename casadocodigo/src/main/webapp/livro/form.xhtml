@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head />
+<h:body>
+	<h:form>
+		<div>
+			<h:outputLabel value="titulo" />
+			<h:inputText value="#{adminLivrosBean.livro.titulo}" />
+		</div>
+		<div>
+			<h:outputLabel value="descricao" />
+			<h:inputTextarea rows="4" cols="8"
+				value="#{adminLivrosBean.livro.descricao}" />
+		</div>
+		<h:outputLabel value="Números de Páginas" />
+		<h:inputText value="#{adminLivrosBean.livro.numeroPaginas}" />
+		<div>
+			<h:outputLabel value="Preço" />
+			<h:inputText value="#{adminLivrosBean.livro.preco}" />
+		</div>
+		<h:commandButton value="Cadastrar" action="#{adminLivrosBean.salva()}"/>
+	</h:form>
+</h:body>
+</html>
