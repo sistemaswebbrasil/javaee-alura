@@ -15,4 +15,9 @@ public class CompraDao implements Serializable {
 	public void salvar(Compra compra) {
 		manager.persist(compra);
 	}
+	
+	public Compra buscaPorUuid(String uuid) {
+	    return manager.createQuery("select c from Compra c where c.uuid = :uuid", Compra.class)
+	            .setParameter("uuid", uuid).getSingleResult();
+	}	
 }

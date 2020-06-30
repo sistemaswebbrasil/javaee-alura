@@ -1,10 +1,13 @@
 package br.com.siswbrasil.bean;
 
 import javax.enterprise.inject.Model;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import br.com.siswbrasil.entity.CarrinhoCompras;
+import br.com.siswbrasil.entity.Compra;
 import br.com.siswbrasil.entity.Usuario;
 
 @Model
@@ -15,10 +18,20 @@ public class CheckoutBean {
 	@Inject
 	private CarrinhoCompras carrinho;
 	
-	@Transactional
-	public void finalizar() {
-		carrinho.finalizar(usuario);
-	}
+    @Inject
+    private FacesContext facesContext;	
+	
+    @Transactional
+    public void finalizar() {
+        Compra compra = new Compra();
+        compra.setUsuario(usuario);
+        carrinho.finalizar(compra);
+
+        String contextName = facesContext.getExternalContext().getRequestContextPath();
+        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        response.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
+        response.setHeader("Location", contextName + "/" + "services/pagamento?uuid=" + compra.getUuid());
+    }
 	
 	public Usuario getUsuario() {
 		return usuario;
