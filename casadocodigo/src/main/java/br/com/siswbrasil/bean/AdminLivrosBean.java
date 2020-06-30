@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -26,9 +28,14 @@ public class AdminLivrosBean implements Serializable {
 	@Inject
 	private AutorDao autorDao;
 
+	@Inject
+	private FacesContext context;
+
 	private Livro livro = new Livro();
 
 	private List<Integer> autoresId = new ArrayList<>();
+	
+
 
 	@Transactional
 	public String salva() {
@@ -36,6 +43,10 @@ public class AdminLivrosBean implements Serializable {
 			livro.getAutores().add(new Autor(autorId));
 		}
 		livroDao.salvar(livro);
+
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		context.addMessage(null, new FacesMessage("Livro cadastrado com sucesso!"));
+
 		return "/livro/lista?faces-redirect=true";
 	}
 
