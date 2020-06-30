@@ -23,8 +23,8 @@ public class LivroDao implements Serializable {
 	}
 
 	public List<Livro> listar() {
-		String jpql = "select distinct(l) from Livro l" + " join fetch l.autores";
-
+		String jpql = "select distinct(l) from Livro l" + " join fetch l.autores where l.capaPath is not null ";
+		
 		return manager.createQuery(jpql, Livro.class).getResultList();
 	}
 
