@@ -21,7 +21,7 @@ public class LivroDetalheBean implements Serializable{
 	@Inject
 	private LivroDao dao;
 
-	public void carregarDetalhe() {
+	public void carregaDetalhe() {
 		this.livro = dao.buscarPorId(id);
 	}
 
