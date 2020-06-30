@@ -5,7 +5,7 @@
 
 <h:head />
 <h:body>
-	<h:form>
+	<h:form enctype="multipart/form-data">
 		<div>
 			<h:outputLabel value="Título" />
 			<h:inputText value="#{adminLivrosBean.livro.titulo}" required="true"
@@ -33,12 +33,23 @@
 		</div>
 		<div>
 			<h:outputLabel value="Autores" />
-			<h:selectManyListbox value="#{adminLivrosBean.autoresId}"
-				converter="javax.faces.Integer" id="autores">
+			<h:selectManyListbox value="#{adminLivrosBean.livro.autores}"
+				converter="autorConverter" id="autores">
 				<f:selectItems value="#{adminLivrosBean.autores}" var="autor"
-					itemValue="#{autor.id}" itemLabel="#{autor.nome}" />
+					itemValue="#{autor}" itemLabel="#{autor.nome}" />
 			</h:selectManyListbox>
 			<h:message for="autores" />
+		</div>
+		<div>
+			<h:outputLabel value="Data de Publicação" />
+			<h:inputText value="#{adminLivrosBean.livro.dataPublicacao}"
+				id="dataPublicacao" />
+			<h:message for="dataPublicacao" />
+		</div>
+		<div>
+			<h:outputLabel value="Capa do Livro" />
+			<h:inputFile value="#{adminLivrosBean.capaLivro}" id="capaLivro" />
+			<h:message for="capaLivro" />
 		</div>
 		<h:commandButton value="Cadastrar" action="#{adminLivrosBean.salvar}" />
 	</h:form>
