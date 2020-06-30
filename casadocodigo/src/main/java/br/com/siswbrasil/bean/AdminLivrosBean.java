@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import br.com.siswbrasil.dao.LivroDao;
 import br.com.siswbrasil.entity.Livro;
@@ -20,6 +21,7 @@ public class AdminLivrosBean implements Serializable {
 
 	private Livro livro = new Livro();
 
+	@Transactional
 	public void salva() {
 		System.out.println("Livro cadastrado: " + livro);
 		livroDao.salvar(livro);
