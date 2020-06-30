@@ -30,4 +30,8 @@ public class CarrinhoComprasBean {
 	public List<CarrinhoItem> getItens() {
 		return new ArrayList<CarrinhoItem>(carrinho.getItens());
 	}
+	
+	public void remover(CarrinhoItem item) {
+		carrinho.remover(item);
+	}	
 }
