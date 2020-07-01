@@ -8,6 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.resteasy.annotations.providers.jaxb.Wrapped;
+
 import br.com.siswbrasil.dao.LivroDao;
 import br.com.siswbrasil.entity.Livro;
 
@@ -18,16 +20,12 @@ public class LivroResource {
     private LivroDao dao;
 
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
-    @Path("json")
-    public List<Livro> ultimosLancamentosJson() {
+    @Path("lancamentos")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Wrapped(element = "livros")    
+    public List<Livro> ultimosLancamentos() {
         return dao.ultimosLancamentos();
     }
     
-    @GET
-    @Path("xml")
-    @Produces({MediaType.APPLICATION_XML})
-    public List<Livro> ultimosLancamentosXml() {
-        return dao.ultimosLancamentos();
-    }    
+   
 }
