@@ -13,8 +13,6 @@ import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 
-import br.com.siswbrasil.service.PagamentoGateway;
-
 @SessionScoped
 @Named
 public class CarrinhoCompras implements Serializable {
@@ -23,11 +21,8 @@ public class CarrinhoCompras implements Serializable {
 	private Set<CarrinhoItem> itens = new HashSet<>();
 	
 	@Inject
-	private PagamentoGateway pagamentoGateway;
-	
-	@Inject
 	private CompraDao compraDao;
-
+	
 	public void add(CarrinhoItem item) {
 		itens.add(item);
 	}
@@ -61,9 +56,9 @@ public class CarrinhoCompras implements Serializable {
 	}
 	
 	public void finalizar(Compra compra) {
-	    compra.setItens(toJson());
-	    compra.setTotal(getTotal());
-	    compraDao.salvar(compra);
+		compra.setItens(toJson());
+		compra.setTotal(getTotal());
+		compraDao.salvar(compra);
 	}
 
 	private String toJson() {

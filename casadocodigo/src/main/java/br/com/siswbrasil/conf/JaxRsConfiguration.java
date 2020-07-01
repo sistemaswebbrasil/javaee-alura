@@ -1,4 +1,4 @@
-package br.com.siswbrasil.util;
+package br.com.siswbrasil.conf;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

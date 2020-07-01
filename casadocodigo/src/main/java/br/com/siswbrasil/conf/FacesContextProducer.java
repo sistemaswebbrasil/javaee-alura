@@ -1,4 +1,4 @@
-package br.com.siswbrasil.util;
+package br.com.siswbrasil.conf;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
