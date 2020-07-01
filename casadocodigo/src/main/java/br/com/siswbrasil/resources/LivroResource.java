@@ -23,4 +23,11 @@ public class LivroResource {
     public List<Livro> ultimosLancamentosJson() {
         return dao.ultimosLancamentos();
     }
+    
+    @GET
+    @Path("xml")
+    @Produces({MediaType.APPLICATION_XML})
+    public List<Livro> ultimosLancamentosXml() {
+        return dao.ultimosLancamentos();
+    }    
 }
