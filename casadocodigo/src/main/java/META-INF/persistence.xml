@@ -9,7 +9,9 @@
         <class>br.com.siswbrasil.entity.Compra</class>
         <class>br.com.siswbrasil.entity.Usuario</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <properties>
+        	<property name="hibernate.cache.use_query_cache" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="false" />
