@@ -7,7 +7,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 
-import br.com.siswbrasil.entity.Pagamento;
+import br.com.siswbrasil.model.Pagamento;
 
 public class PagamentoGateway implements Serializable {
 

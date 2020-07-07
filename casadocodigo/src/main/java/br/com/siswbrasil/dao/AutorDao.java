@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.com.siswbrasil.entity.Autor;
+import br.com.siswbrasil.model.Autor;
 
 public class AutorDao {
 	

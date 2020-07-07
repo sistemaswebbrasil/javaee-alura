@@ -4,10 +4,12 @@
 		<description>Dev persistence unit</description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>        
 		<jta-data-source>java:/jdbc/mariadbJee01</jta-data-source>		
-        <class>br.com.siswbrasil.entity.Livro</class>
-        <class>br.com.siswbrasil.entity.Autor</class>
-        <class>br.com.siswbrasil.entity.Compra</class>
-        <class>br.com.siswbrasil.entity.Usuario</class>
+        <class>br.com.siswbrasil.model.Livro</class>
+        <class>br.com.siswbrasil.model.Autor</class>
+        <class>br.com.siswbrasil.model.Compra</class>
+        <class>br.com.siswbrasil.model.Usuario</class>
+        <class>br.com.siswbrasil.model.SystemRole</class>
+        <class>br.com.siswbrasil.model.SystemUser</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <properties>

@@ -7,7 +7,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import br.com.siswbrasil.entity.Livro;
+import br.com.siswbrasil.model.Livro;
 
 @Model
 public class LivroDetalheBean implements Serializable{

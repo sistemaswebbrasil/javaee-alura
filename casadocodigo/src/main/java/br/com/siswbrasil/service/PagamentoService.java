@@ -20,8 +20,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-import br.com.siswbrasil.entity.Compra;
-import br.com.siswbrasil.entity.CompraDao;
+import br.com.siswbrasil.model.Compra;
+import br.com.siswbrasil.model.CompraDao;
 
 @Path("/pagamento")
 public class PagamentoService {

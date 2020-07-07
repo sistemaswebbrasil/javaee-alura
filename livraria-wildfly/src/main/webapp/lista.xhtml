@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="_template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="livroId" value="#{livroBean.livroId}" />
+		<f:viewAction action="#{livroBean.carregaPelaId}"
+			if="#{param['livroId'] != null}" />
+	</f:metadata>
+
+	<ui:define name="titulo">
+		Lista de livros
+	</ui:define>
+
+	<p:outputPanel>Lista de livros</p:outputPanel>
+
+	<ui:define name="conteudo">
+
+		<h:form id="formTabelaLivros">
+			<p:dataTable id="tabelaLivros" value="#{livroBean.livroDataModel}"
+				widgetVar="filterTable" var="livro" class="table" paginator="true"
+				rows="5" lazy="true">
+				<f:facet name="header">Livros</f:facet>
+
+				<p:column width="20">
+					<h:commandLink action="#{livroBean.editar(livro)}"
+						title="Editar">
+						<i class="fa fa-fw fa-pencil" />
+						<f:param name="userId" value="#{livro.id}" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column width="20">
+					<h:commandLink title="Excluir"
+						action="#{livroBean.removeLivro(livro)}">
+						<i class="fa fa-fw fa-trash" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column headerText="ID" width="40">
+					<h:outputText value="#{livro.id}" />
+				</p:column>
+
+				<p:column headerText="Título" sortBy="#{livro.titulo}"
+					footerText="Começa com" filterBy="#{livro.titulo}"
+					filterMatchMode="startsWith">
+					<h:outputText value="#{livro.titulo}" />
+				</p:column>
+
+				<p:column headerText="ISBN" sortBy="#{livro.isbn}"
+					footerText="Contem" filterBy="#{livro.isbn}"
+					filterMatchMode="contains">
+					<h:outputText value="#{livro.isbn}" />
+				</p:column>
+
+				<p:column headerText="Preço" sortBy="#{livro.preco}"
+					footerText="Menor ou igual" filterBy="#{livro.preco}"
+					filterFunction="#{livroBean.precoEhMenor}">
+					<h:outputText value="#{livro.preco}">
+						<f:convertNumber type="currency" pattern="R$ #0.00"
+							currencySymbol="R$" locale="pt_BR" />
+					</h:outputText>
+				</p:column>
+
+				<p:column filterBy="#{livro.dataLancamento.time}"
+					sortBy="#{livro.dataLancamento.time}" headerText="Data"
+					footerText="Menor ou igual" filterMatchMode="lte">
+
+					<f:facet name="filter">
+						<p:calendar pattern="dd/MM/yyyy">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('filterTable').filter()" />
+						</p:calendar>
+					</f:facet>
+
+					<h:outputText value="#{livro.dataLancamento.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Gênero" sortBy="#{livro.genero}"
+					filterBy="#{livro.genero}" filterMatchMode="exact"
+					footerText="Igual">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('filterTable').filter()">
+							<f:selectItem itemLabel="Selecione..." itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{livroBean.generos}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{livro.genero}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="rodape">	
+		Livro
+	</ui:define>
+
+</ui:composition>
+</html>

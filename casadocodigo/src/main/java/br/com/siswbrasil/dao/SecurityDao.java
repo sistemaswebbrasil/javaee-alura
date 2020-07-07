@@ -1,0 +1,24 @@
+package br.com.siswbrasil.dao;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import br.com.siswbrasil.model.SystemUser;
+
+public class SecurityDao {
+
+	@PersistenceContext
+	private EntityManager manager;
+	
+	public SystemUser findByEmail(String email) {
+		System.out.println("##########################################");
+		System.out.println("##########################################");
+		System.out.println("##########################################");
+		
+		
+		return manager.createQuery("select su from SystemUser su "
+				+ "where su.email = :email", SystemUser.class)
+				.setParameter("email", email)
+				.getSingleResult();
+	}
+}

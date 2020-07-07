@@ -7,7 +7,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
 import br.com.siswbrasil.dao.LivroDao;
-import br.com.siswbrasil.entity.Livro;
+import br.com.siswbrasil.model.Livro;
 
 @Model
 public class AdminListaLivrosBean {

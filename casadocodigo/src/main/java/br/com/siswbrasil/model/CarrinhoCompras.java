@@ -1,4 +1,4 @@
-package br.com.siswbrasil.entity;
+package br.com.siswbrasil.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -14,8 +14,8 @@ import javax.transaction.Transactional;
 
 import br.com.siswbrasil.dao.AutorDao;
 import br.com.siswbrasil.dao.LivroDao;
-import br.com.siswbrasil.entity.Autor;
-import br.com.siswbrasil.entity.Livro;
+import br.com.siswbrasil.model.Autor;
+import br.com.siswbrasil.model.Livro;
 import br.com.siswbrasil.util.FileSaver;
 
 @Named

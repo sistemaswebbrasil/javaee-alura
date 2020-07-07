@@ -6,9 +6,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
-import br.com.siswbrasil.entity.CarrinhoCompras;
-import br.com.siswbrasil.entity.Compra;
-import br.com.siswbrasil.entity.Usuario;
+import br.com.siswbrasil.model.CarrinhoCompras;
+import br.com.siswbrasil.model.Compra;
+import br.com.siswbrasil.model.Usuario;
 
 @Model
 public class CheckoutBean {

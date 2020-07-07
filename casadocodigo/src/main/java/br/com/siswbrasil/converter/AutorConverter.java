@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import br.com.siswbrasil.entity.Autor;
+import br.com.siswbrasil.model.Autor;
 
 @FacesConverter("autorConverter")
 public class AutorConverter implements Converter {

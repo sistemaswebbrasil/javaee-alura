@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.annotations.providers.jaxb.Wrapped;
 
 import br.com.siswbrasil.dao.LivroDao;
-import br.com.siswbrasil.entity.Livro;
+import br.com.siswbrasil.model.Livro;
 
 @Path("livros")
 public class LivroResource {

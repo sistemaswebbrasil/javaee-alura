@@ -8,9 +8,9 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import br.com.siswbrasil.entity.Compra;
-import br.com.siswbrasil.entity.CompraDao;
 import br.com.siswbrasil.infra.MailSender;
+import br.com.siswbrasil.model.Compra;
+import br.com.siswbrasil.model.CompraDao;
 
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(

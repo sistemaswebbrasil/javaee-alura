@@ -1,11 +1,13 @@
 package br.com.caelum.livraria.bean;
 
+import java.awt.Container;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -30,10 +32,10 @@ public class LivroBean implements Serializable {
 	private Livro livro = new Livro();
 	private Integer autorId;
 	private Integer livroId;
-	
+
 	@Inject
 	private LivroDataModel livroDataModel;
-	
+
 	private List<String> generos = Arrays.asList("Romance", "Drama", "Ação");
 	private List<Livro> livros;
 
@@ -42,33 +44,47 @@ public class LivroBean implements Serializable {
 
 	@Inject
 	private LivroDao livroDao;
-	
+
 	@Inject
 	private JsfUtil context;
 
-	
+	private Livro selected = new Livro();
+
+	public String editar(Livro livro) {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selected", livro);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selected2", livro);
+		
+		
+		//Map<String, Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		
+		
+		
+
+		
+		
+		return "form?faces-redirect=true";
+	}
+
 	public List<Autor> getAutores() {
 		return autorDao.listaTodos();
-	}	
+	}
 
 	@Transactional
 	public void gravar() {
-	    System.out.println("Gravando livro " + this.livro.getTitulo());
+		System.out.println("Gravando livro " + this.livro.getTitulo());
 
-	    if (livro.getAutores().isEmpty()) {
-	    	context.getFacesContext().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
-	        return;
-	    }
+		if (livro.getAutores().isEmpty()) {
+			context.getFacesContext().addMessage("autor", new FacesMessage("Livro deve ter pelo menos um Autor."));
+			return;
+		}
 
-	
-
-	    if(this.livro.getId() == null) {	    	
-	    	livroDao.adiciona(this.livro);
-	        this.getLivroDataModel();
-	    } else {
-	    	livroDao.atualiza(this.livro);
-	    }	              
-	    this.livro = new Livro();
+		if (this.livro.getId() == null) {
+			livroDao.adiciona(this.livro);
+			this.getLivroDataModel();
+		} else {
+			livroDao.atualiza(this.livro);
+		}
+		this.livro = new Livro();
 	}
 
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
@@ -77,38 +93,39 @@ public class LivroBean implements Serializable {
 			throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
 		}
 	}
-	
-	public boolean precoEhMenor(Object valorColuna, Object filtroDigitado, Locale locale) { 
 
-        //tirando espaços do filtro
-        String textoDigitado = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
+	public boolean precoEhMenor(Object valorColuna, Object filtroDigitado, Locale locale) {
 
-        System.out.println("Filtrando pelo " + textoDigitado + ", Valor do elemento: " + valorColuna);
+		// tirando espaços do filtro
+		String textoDigitado = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
 
-        // o filtro é nulo ou vazio?
-        if (textoDigitado == null || textoDigitado.equals("")) {
-            return true;
-        }
+		System.out.println("Filtrando pelo " + textoDigitado + ", Valor do elemento: " + valorColuna);
 
-        // elemento da tabela é nulo?
-        if (valorColuna == null) {
-            return false;
-        }
+		// o filtro é nulo ou vazio?
+		if (textoDigitado == null || textoDigitado.equals("")) {
+			return true;
+		}
 
-        try {
-            // fazendo o parsing do filtro para converter para Double
-            Double precoDigitado = Double.valueOf(textoDigitado);
-            Double precoColuna = (Double) valorColuna;
+		// elemento da tabela é nulo?
+		if (valorColuna == null) {
+			return false;
+		}
 
-            // comparando os valores, compareTo devolve um valor negativo se o value é menor do que o filtro
-            return precoColuna.compareTo(precoDigitado) < 0;
+		try {
+			// fazendo o parsing do filtro para converter para Double
+			Double precoDigitado = Double.valueOf(textoDigitado);
+			Double precoColuna = (Double) valorColuna;
 
-        } catch (NumberFormatException e) {
+			// comparando os valores, compareTo devolve um valor negativo se o value é menor
+			// do que o filtro
+			return precoColuna.compareTo(precoDigitado) < 0;
 
-            // usuario nao digitou um numero
-            return false;
-        }
-}	
+		} catch (NumberFormatException e) {
+
+			// usuario nao digitou um numero
+			return false;
+		}
+	}
 
 	public void gravarAutor() {
 		Autor autor = autorDao.buscaPorId(this.autorId);
@@ -170,12 +187,20 @@ public class LivroBean implements Serializable {
 	public List<String> getGeneros() {
 		return generos;
 	}
-	
+
 	public List<Livro> getLivros() {
-	    if(this.livros == null) {
-	        this.livros = livroDao.listaTodos();            
-	    }
-	    return livros;
+		if (this.livros == null) {
+			this.livros = livroDao.listaTodos();
+		}
+		return livros;
+	}
+
+	public Livro getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Livro selected) {
+		this.selected = selected;
 	}
 
 }
